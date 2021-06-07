@@ -22,7 +22,7 @@ module.exports = {
       usr_range_troca,
       usr_latitude,
       usr_longitude
-      } = req.body;
+    } = req.body;
 
     const user = await Usuario.create({ 
       usr_apelido,
@@ -38,7 +38,7 @@ module.exports = {
       usr_range_troca,
       usr_latitude,
       usr_longitude
-     });
+    });
 
     return res.json(user);
   }
