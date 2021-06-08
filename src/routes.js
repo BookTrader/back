@@ -7,6 +7,7 @@ const routes = express.Router();
 
 //Auth
 routes.post('/login', AuthController.login);
+routes.post('/validate', AuthController.TokenValido);
 
 // Usuario
 routes.get('/usuario', UsuarioController.list);

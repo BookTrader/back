@@ -26,5 +26,13 @@ module.exports = {
     });
 
     return res.send({usuario, token});
+  },
+
+  async TokenValido(req, res){
+    const token = req.body.token || ''
+
+    jwt.verify(token, "user-teste", function(err, decoded){
+      return res.status(200).send({valid: !err})
+    })
   }
 }
