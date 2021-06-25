@@ -23,8 +23,11 @@ routes.delete('/usuario/:usr_id', UsuarioController.delete);
 
 // Exemplar
 routes.post('/exemplar', ExemplarController.store);
-routes.post('/exemplar/:exm_id/imagem', upload.array('imagem'), ImagemController.store);
 routes.delete('/exemplar/:exm_id', ExemplarController.delete);
+
+// Imagem
+routes.post('/exemplar/:exm_id/imagem', upload.array('imagem', 5), ImagemController.store);
+routes.delete('/imagem/:img_id', ImagemController.delete);
 
 // Anúncio
 routes.post('/usuario/:usr_id/exemplar/:exm_id/anuncio', AnuncioController.store);
