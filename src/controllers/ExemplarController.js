@@ -1,4 +1,5 @@
 const Exemplar = require('../model/Exemplar');
+const Imagem = require('../controllers/ImagemController');
 
 module.exports = {
   async store(req, res) {
@@ -25,6 +26,7 @@ module.exports = {
       return res.status(400).json({ error: "Exemplar não encontrado!" })
     }
     
+    await Imagem.deleteWhere(exm_id);
     await exemplar.destroy().then(() => {
       return res.json({ message: "Exemplar excluido com sucesso!" })
     });
