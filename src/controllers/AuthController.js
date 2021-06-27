@@ -21,7 +21,7 @@ module.exports = {
 
     usuario.usr_senha = undefined;
 
-    const token = jwt.sign({id: usuario.id}, "user-teste", {
+    const token = jwt.sign({id: usuario.id}, "cachoeira", {
       expiresIn: "1h",
     });
 
@@ -31,7 +31,7 @@ module.exports = {
   async TokenValido(req, res){
     const token = req.body.token || ''
 
-    jwt.verify(token, "user-teste", function(err, decoded){
+    jwt.verify(token, "cachoeira", function(err, decoded){
       return res.status(200).send({valid: !err})
     })
   }
