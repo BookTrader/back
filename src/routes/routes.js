@@ -26,7 +26,7 @@ routes.post('/exemplar', ExemplarController.store);
 routes.delete('/exemplar/:exm_id', ExemplarController.delete);
 
 // Imagem
-routes.post('/exemplar/:exm_id/imagem', upload.array('imagem', 5), ImagemController.store);
+routes.post('/exemplar/:exm_id/imagem', upload.array('imagens'), ImagemController.store);
 routes.delete('/imagem/:img_id', ImagemController.delete);
 
 // Anúncio
