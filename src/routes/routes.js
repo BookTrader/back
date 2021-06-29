@@ -30,6 +30,7 @@ routes.post('/exemplar/:exm_id/imagem', upload.array('imagens'), ImagemControlle
 routes.delete('/imagem/:img_id', ImagemController.delete);
 
 // Anúncio
+routes.get('/anuncio', AnuncioController.listAll)
 routes.post('/usuario/:usr_id/exemplar/:exm_id/anuncio', AnuncioController.store);
 routes.delete('/anuncio/:anc_id', AnuncioController.delete);
 
