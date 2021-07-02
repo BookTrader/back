@@ -3,6 +3,8 @@ const Exemplar = require('../model/Exemplar');
 const Anuncio = require('../model/Anuncio');
 const Imagem = require('../model/Imagem');
 
+const imagesView = require('../views/images_view');
+
 module.exports = {
   async listAll(req, res) {
     const anuncios = await Anuncio.findAll();
@@ -24,12 +26,14 @@ module.exports = {
       return res.status(400).json({ error: "Exemplares não encontrados!" });
     }
 
-    imagens = await Promise.all(
+    images = await Promise.all(
       exemplares.map(async (exemp) => {
-        const query = await Imagem.findOne({where: { exm_id: exemp.id }})
+        const query = await Imagem.findOne({where: { exm_id: exemp.id }});
         return query;
       })
     );
+
+    const imagens = imagesView.renderMany(images);
 
     return res.json({exemplares, imagens, anuncios});
   },
@@ -51,7 +55,6 @@ module.exports = {
     }
 
     const anuncio = await Anuncio.create({ anc_descricao, exm_id, usr_id });
-    console.log(anuncio);
     
     return res.json(anuncio);
   },
