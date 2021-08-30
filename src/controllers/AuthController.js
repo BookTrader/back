@@ -1,23 +1,36 @@
 const Usuario = require('../model/Usuario');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 module.exports = {
   async login(req, res) {
     const {usr_email, usr_senha} = req.body;
 
-    const usuario = await Usuario.findOne({where: {usr_email, usr_senha}});
+    const usuario = await Usuario.findOne({where: {usr_email}});
 
     if (!usuario) {
       return res.status(400).send({error: "Email ou Senha incorretos!"});
     }
 
-    usuario.usr_senha = undefined;
+    bcrypt.compare(usr_senha, usuario.usr_senha, (err, result) => {
+      if (err) {
+        return res.status(401).send({ msg: "Falha na autenticação!" })
+      }
 
-    const token = jwt.sign({id: usuario.id}, "cachoeira", {
-      expiresIn: "1h",
+      if (result) {
+        usuario.usr_senha = undefined;
+    
+        const token = jwt.sign(
+          {id: usuario.id}, 
+          "cachoeira", 
+          {expiresIn: "1h"}
+        );
+
+        return res.send({usuario, token});
+      }
+
+      return res.status(401).send({ msg: "Falha na autenticação!" });
     });
-
-    return res.send({usuario, token});
   },
 
   async TokenValido(req, res){
