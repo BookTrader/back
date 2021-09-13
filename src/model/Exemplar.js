@@ -17,6 +17,7 @@ class Exemplar extends Model {
   }
 
   static associate(models) {
+    this.belongsTo(models.usuario, { foreignKey: 'usr_id', as: 'usuario' })
     this.hasMany(models.imagem, { foreignKey: 'exm_id', as: 'imagens' })
     this.hasOne(models.anuncio, { foreignKey: 'exm_id', as: 'anuncio' })
   }

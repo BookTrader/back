@@ -12,7 +12,7 @@ class Anuncio extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Usuario, { foreignKey: 'usr_id', as: 'usuarios' })
+    this.belongsTo(models.usuario, { foreignKey: 'usr_id', as: 'usuario' })
     this.belongsTo(models.exemplar, { foreignKey: 'exm_id', as: 'exemplar' })
   }
 }

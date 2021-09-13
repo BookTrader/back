@@ -22,7 +22,9 @@ routes.post('/usuario', UsuarioController.store);
 routes.delete('/usuario/:usr_id', UsuarioController.delete);
 
 // Exemplar
-routes.post('/exemplar', ExemplarController.store);
+routes.post('/usuario/:usr_id/exemplar', ExemplarController.store);
+routes.get('/exemplar', ExemplarController.list);
+routes.get('/usuario/:usr_id/exemplar', ExemplarController.findUserExemplares);
 routes.delete('/exemplar/:exm_id', ExemplarController.delete);
 
 // Imagem

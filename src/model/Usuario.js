@@ -17,12 +17,13 @@ class Usuario extends Model {
       usr_latitude: DataTypes.FLOAT,
       usr_longitude: DataTypes.FLOAT
     }, {
-      sequelize
+      sequelize, freezeTableName: true, modelName: 'usuario'
     })
   }
 
   static associate(models) {
-    this.hasMany(models.anuncio, { foreignKey: 'usr_id', as: 'imagens' })
+    this.hasMany(models.anuncio, { foreignKey: 'usr_id', as: 'anuncios' })
+    this.hasMany(models.exemplar, { foreignKey: 'usr_id', as: 'exemplares' })
   }
 }
 
