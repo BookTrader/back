@@ -19,6 +19,7 @@ routes.post('/validate', AuthController.TokenValido);
 // Usuario
 routes.get('/usuario', UsuarioController.list);
 routes.post('/usuario', UsuarioController.store);
+routes.patch('/usuario/:usr_id', upload.single('imagem'), UsuarioController.update)
 routes.delete('/usuario/:usr_id', UsuarioController.delete);
 
 // Exemplar
@@ -28,7 +29,7 @@ routes.get('/usuario/:usr_id/exemplar', ExemplarController.findUserExemplares);
 routes.delete('/exemplar/:exm_id', ExemplarController.delete);
 
 // Imagem
-routes.post('/exemplar/:exm_id/imagem', upload.array('imagens'), ImagemController.store);
+routes.post('/exemplar/:exm_id/imagem', upload.array('imagens', 5), ImagemController.store);
 routes.delete('/imagem/:img_id', ImagemController.delete);
 
 // Anúncio

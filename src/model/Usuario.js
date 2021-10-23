@@ -5,8 +5,8 @@ class Usuario extends Model {
     super.init({
       usr_apelido: DataTypes.STRING,
       usr_nome: DataTypes.STRING,
-      usr_foto: DataTypes.BLOB,
-      usr_cpf: DataTypes.INTEGER,
+      usr_foto: DataTypes.STRING,
+      usr_cpf: DataTypes.STRING,
       usr_ender_uf: DataTypes.STRING,
       usr_ender_cep: DataTypes.INTEGER,
       usr_ender_cidade: DataTypes.STRING,
