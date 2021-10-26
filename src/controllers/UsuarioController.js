@@ -47,7 +47,12 @@ module.exports = {
     const data = {
       usr_apelido,
       usr_nome,
-      usr_cpf
+      usr_cpf,
+      usr_ender_uf,
+      usr_ender_cep,
+      usr_ender_cidade,
+      usr_ender_bairro,
+      usr_range_troca
     } = req.body;
 
     const usuario = await Usuario.findByPk(usr_id);
@@ -59,6 +64,11 @@ module.exports = {
     usuario.usr_apelido = data.usr_apelido;
     usuario.usr_nome = data.usr_nome;
     usuario.usr_cpf = data.usr_cpf;
+    usuario.usr_ender_uf = data.usr_ender_uf;
+    usuario.usr_ender_cep = data.usr_ender_cep;
+    usuario.usr_ender_cidade = data.usr_ender_cidade;
+    usuario.usr_ender_bairro = data.usr_ender_bairro;
+    usuario.usr_range_troca = data.usr_range_troca;
 
     if(imagem && usuario.usr_foto) {
       await unlinkAsync(path.join(__dirname, '..', '..', 'uploads', usuario.usr_foto));
@@ -72,6 +82,7 @@ module.exports = {
     const updatedUser = await usuario.save();
     
     updatedUser.usr_senha = undefined;
+    
     if(updatedUser.usr_foto){
       updatedUser.usr_foto = imagesView.renderUserImage(updatedUser.usr_foto)
     }
