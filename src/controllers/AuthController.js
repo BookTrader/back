@@ -1,6 +1,7 @@
 const Usuario = require('../model/Usuario');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const imagesView = require('../views/images_view');
 
 module.exports = {
   async login(req, res) {
@@ -25,6 +26,14 @@ module.exports = {
           "cachoeira", 
           {expiresIn: "1h"}
         );
+
+        if(usuario.usr_range_troca) {
+          usuario.usr_range_troca = [usuario.usr_range_troca];
+        }
+
+        if(usuario.usr_foto){
+          usuario.usr_foto = imagesView.renderUserImage(usuario.usr_foto)
+        }
 
         return res.send({usuario, token});
       }

@@ -8,5 +8,11 @@ module.exports = {
 
     renderMany(images){
         return images.map(image => this.render(image));
+    },
+
+    renderUserImage(image) {
+        let usr_image = {path: image};
+
+        return this.render(usr_image)
     }
 }
