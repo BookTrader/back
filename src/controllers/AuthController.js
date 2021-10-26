@@ -27,6 +27,10 @@ module.exports = {
           {expiresIn: "1h"}
         );
 
+        if(usuario.usr_range_troca) {
+          usuario.usr_range_troca = [usuario.usr_range_troca];
+        }
+
         if(usuario.usr_foto){
           usuario.usr_foto = imagesView.renderUserImage(usuario.usr_foto)
         }
