@@ -14,8 +14,8 @@ class Usuario extends Model {
       usr_email: DataTypes.STRING,
       usr_senha: DataTypes.STRING,
       usr_range_troca: DataTypes.FLOAT,
-      usr_latitude: DataTypes.FLOAT,
-      usr_longitude: DataTypes.FLOAT
+      usr_latitude: DataTypes.DECIMAL(10, 8),
+      usr_longitude: DataTypes.DECIMAL(10, 8)
     }, {
       sequelize, freezeTableName: true, modelName: 'usuario'
     })

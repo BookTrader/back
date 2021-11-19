@@ -52,7 +52,9 @@ module.exports = {
       usr_ender_cep,
       usr_ender_cidade,
       usr_ender_bairro,
-      usr_range_troca
+      usr_range_troca,
+      usr_latitude,
+      usr_longitude
     } = req.body;
 
     const usuario = await Usuario.findByPk(usr_id);
@@ -69,14 +71,17 @@ module.exports = {
     usuario.usr_ender_cidade = data.usr_ender_cidade;
     usuario.usr_ender_bairro = data.usr_ender_bairro;
     usuario.usr_range_troca = data.usr_range_troca;
+    usuario.usr_latitude = data.usr_latitude;
+    usuario.usr_longitude = data.usr_longitude;
+
+    console.log({ usr_latitude, usr_longitude })
 
     if(imagem && usuario.usr_foto) {
       await unlinkAsync(path.join(__dirname, '..', '..', 'uploads', usuario.usr_foto));
     }
     
     if(imagem) {
-      data.usr_foto = imagem.filename;
-      usuario.usr_foto = data.usr_foto;
+      usuario.usr_foto = imagem.filename;
     }
 
     const updatedUser = await usuario.save();
