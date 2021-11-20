@@ -1,11 +1,11 @@
 const express = require('express');
 const multer = require('multer');
 
-const UsuarioController = require('../controllers/UsuarioController');
-const AuthController = require('../controllers/AuthController')
-const ExemplarController = require('../controllers/ExemplarController');
-const ImagemController = require('../controllers/ImagemController');
-const AnuncioController = require('../controllers/AnuncioController');
+const UsuarioController = require('../app/controllers/UsuarioController');
+const AuthController = require('../app/controllers/AuthController')
+const ExemplarController = require('../app/controllers/ExemplarController');
+const ImagemController = require('../app/controllers/ImagemController');
+const AnuncioController = require('../app/controllers/AnuncioController');
 
 const uploadConfig = require('../config/upload');
 
@@ -15,6 +15,8 @@ const upload = multer(uploadConfig);
 // Auth
 routes.post('/login', AuthController.login);
 routes.post('/validate', AuthController.TokenValido);
+routes.post('/forgot_password', AuthController.forgot_password);
+routes.post('/reset_password', AuthController.reset_password);
 
 // Usuario
 routes.get('/usuario', UsuarioController.list);
