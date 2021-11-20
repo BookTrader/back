@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
 const dbConfig = require('../config/database');
 
-const Anuncio = require('../model/Anuncio');
-const Exemplar = require('../model/Exemplar');
-const Imagem = require('../model/Imagem');
-const Usuario = require('../model/Usuario');
+const Anuncio = require('../app/model/Anuncio');
+const Exemplar = require('../app/model/Exemplar');
+const Imagem = require('../app/model/Imagem');
+const Usuario = require('../app/model/Usuario');
 
 const connection = new Sequelize(dbConfig);
 
