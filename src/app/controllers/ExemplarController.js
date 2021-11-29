@@ -54,16 +54,18 @@ module.exports = {
       return res.status(400).json({ error: "Exemplares não encontrados!" });
     }
 
-    images = await Promise.all(
+    await Promise.all(
       exemplares.map(async (exemp) => {
-        const query = await Imagem.findOne({where: { exm_id: exemp.id }});
-        return query;
+        const query = await Imagem.findAll({where: { exm_id: exemp.id }});
+        if(!exemplarFotos) { return res.status(400).send({error: "Erro ao procurar fotos do exemplar!"}) }
+
+        const imagens = imagesView.renderMany(query);
+
+        exemp.setDataValue('imagens', imagens);
       })
     );
 
-    const imagens = imagesView.renderMany(images);
-
-    return res.status(201).json({exemplares, imagens});
+    return res.status(201).json(exemplares);
   },
 
   async delete(req, res) {
