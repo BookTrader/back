@@ -13,7 +13,7 @@ class Usuario extends Model {
       usr_ender_bairro: DataTypes.STRING,
       usr_email: DataTypes.STRING,
       usr_senha: DataTypes.STRING,
-      usr_range_troca: DataTypes.FLOAT,
+      usr_range_troca: DataTypes.INTEGER,
       usr_latitude: DataTypes.DECIMAL(10, 8),
       usr_longitude: DataTypes.DECIMAL(10, 8),
       reset_token: DataTypes.STRING,

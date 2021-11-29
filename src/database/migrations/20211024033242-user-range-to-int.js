@@ -3,14 +3,14 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.changeColumn('usuario', 'usr_range_troca', {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       allowNull: true
     });
   },
 
   down: async (queryInterface, Sequelize) => {
     return queryInterface.changeColumn('usuario', 'usr_range_troca', {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: true
     });
   }
