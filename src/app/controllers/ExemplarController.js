@@ -57,14 +57,14 @@ module.exports = {
     await Promise.all(
       exemplares.map(async (exemp) => {
         const query = await Imagem.findAll({where: { exm_id: exemp.id }});
-        if(!exemplarFotos) { return res.status(400).send({error: "Erro ao procurar fotos do exemplar!"}) }
-
+        if(!query) { return res.status(400).send({error: "Erro ao procurar fotos do exemplar!"}) }
+        
         const imagens = imagesView.renderMany(query);
-
+        
         exemp.setDataValue('imagens', imagens);
       })
-    );
-
+      );
+      
     return res.status(201).json(exemplares);
   },
 
