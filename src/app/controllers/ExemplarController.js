@@ -63,9 +63,28 @@ module.exports = {
         
         exemp.setDataValue('imagens', imagens);
       })
-      );
+    );
       
     return res.status(201).json(exemplares);
+  },
+
+  async listOne(req, res) {
+    const { exm_id } = req.params;
+
+    const exemplar = await Exemplar.findOne({where: {id: exm_id}});
+
+    if(!exemplar) {
+      return res.status(400).json({ error: "Exemplar não encontrado!" });
+    }
+
+    const query = await Imagem.findAll({where: { exm_id: exemplar.id }});
+    if(!query) { return res.status(400).send({error: "Erro ao procurar fotos do exemplar!"}) }
+    
+    const imagens = imagesView.renderMany(query);
+    
+    exemplar.setDataValue('imagens', imagens);
+
+    return res.status(200).json(exemplar)
   },
 
   async delete(req, res) {
