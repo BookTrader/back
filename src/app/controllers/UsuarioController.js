@@ -41,7 +41,6 @@ module.exports = {
   },
 
   async update(req, res) {
-
     try {
       const { usr_id } = req.params;
       const imagem = req.file;
@@ -57,13 +56,12 @@ module.exports = {
         usr_latitude,
         usr_longitude
       } = req.body;
-  
-      const usuario = await Usuario.findByPk(usr_id);
-  
+      const usuario = await Usuario.findByPk(usr_id).catch();
+      
       if(!usuario) {
         return res.status(400).json({ error: "Usuário não encontrado!" });
       }
-  
+      
       data.usr_apelido ? usuario.usr_apelido = data.usr_apelido : null;
       data.usr_nome ? usuario.usr_nome = data.usr_nome : null;
       data.usr_cpf ? usuario.usr_cpf = data.usr_cpf : null;
@@ -74,7 +72,7 @@ module.exports = {
       data.usr_range_troca ? usuario.usr_range_troca = data.usr_range_troca : null;
       data.usr_latitude ? usuario.usr_latitude = data.usr_latitude : null;
       data.usr_longitude ? usuario.usr_longitude = data.usr_longitude : null;
-  
+      
       if(imagem && usuario.usr_foto) {
         await unlinkAsync(path.join(__dirname, '..', '..', '..', 'uploads', usuario.usr_foto));
       }
@@ -82,7 +80,32 @@ module.exports = {
       if(imagem) {
         usuario.usr_foto = imagem.filename;
       }
-  
+
+      const usr_fields = [
+        'usr_foto',
+        'usr_nome',
+        'usr_cpf',
+        'usr_ender_uf',
+        'usr_ender_cep',
+        'usr_ender_cidade',
+        'usr_ender_bairro',
+        'usr_range_troca',
+        'usr_latitude',
+        'usr_longitude'
+      ];
+
+      let fieldCount = 0;
+
+      Object.keys(usuario.dataValues).forEach((key) => {
+        usr_fields.forEach((field) => {
+          if (key === field) {
+            !!usuario.dataValues[key] && fieldCount++
+          }
+        })
+      })
+      
+      if (fieldCount === 10) usuario.isActive = true
+
       await usuario.save();
       
       usuario.usr_senha = undefined;
