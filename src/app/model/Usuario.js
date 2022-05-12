@@ -17,7 +17,8 @@ class Usuario extends Model {
       usr_latitude: DataTypes.DECIMAL(10, 8),
       usr_longitude: DataTypes.DECIMAL(10, 8),
       reset_token: DataTypes.STRING,
-      reset_token_expires: DataTypes.DATE
+      reset_token_expires: DataTypes.DATE,
+      is_active: DataTypes.BOOLEAN
     }, {
       sequelize, freezeTableName: true, modelName: 'usuario'
     })

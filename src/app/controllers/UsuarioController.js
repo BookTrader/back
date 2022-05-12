@@ -102,15 +102,16 @@ module.exports = {
             !!usuario.dataValues[key] && fieldCount++
           }
         })
-      })
-      
-      if (fieldCount === 10) usuario.isActive = true
+      });
+
+      console.log(fieldCount)
+      if (fieldCount === 10) usuario.is_active = true
 
       await usuario.save();
       
       usuario.usr_senha = undefined;
       
-      if(usuario.usr_foto){
+      if(usuario.usr_foto) {
         usuario.usr_foto = imagesView.renderUserImage(usuario.usr_foto)
       }
         

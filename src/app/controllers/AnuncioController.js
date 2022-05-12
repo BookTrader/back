@@ -32,10 +32,26 @@ module.exports = {
         return query;
       })
     );
+
+    const usuarios = await Promise.all(
+      anuncios.map(async (anun) => {
+        const query = await Usuario.findOne({where: {id: anun.usr_id}});
+        const returnQuery = {
+          id: query.id,
+          usr_apelido: query.usr_apelido,
+          usr_foto: query.usr_foto,
+          usr_ender_cidade: query.usr_ender_cidade,
+          usr_ender_bairro: query.usr_ender_bairro,
+          anc_id: anun.id,
+        }
+        return returnQuery;
+      })
+    );
+    console.log(usuarios)
     
     const imagens = imagesView.renderMany(images);
     
-    return res.json({exemplares, imagens, anuncios});
+    return res.json({exemplares, imagens, anuncios, usuarios});
   },
   
   async store(req, res) {
