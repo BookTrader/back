@@ -1,13 +1,12 @@
 const { Model, DataTypes } = require('sequelize');
 
-class Anuncio extends Model {
+class Proposta extends Model {
   static init(sequelize) {
     super.init(
       {
-        anc_descricao: DataTypes.STRING,
-        is_proposal: DataTypes.BOOLEAN
+        prop_descricao: DataTypes.STRING,
       }, {
-        sequelize, freezeTableName: true, modelName: 'anuncio'
+        sequelize, freezeTableName: true, modelName: 'proposta'
       }
     )
   }
@@ -15,7 +14,8 @@ class Anuncio extends Model {
   static associate(models) {
     this.belongsTo(models.usuario, { foreignKey: 'usr_id', as: 'usuario' })
     this.belongsTo(models.exemplar, { foreignKey: 'exm_id', as: 'exemplar' })
+    this.belongsTo(models.anuncio, { foreignKey: 'anc_id', as: 'anuncio' })
   }
 }
 
-module.exports = Anuncio;
+module.exports = Proposta;

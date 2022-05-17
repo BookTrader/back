@@ -6,6 +6,7 @@ const AuthController = require('../app/controllers/AuthController')
 const ExemplarController = require('../app/controllers/ExemplarController');
 const ImagemController = require('../app/controllers/ImagemController');
 const AnuncioController = require('../app/controllers/AnuncioController');
+const PropostaController = require('../app/controllers/PropostaController');
 
 const uploadConfig = require('../config/upload');
 
@@ -40,5 +41,8 @@ routes.get('/anuncio', AnuncioController.listAll);
 routes.get('/anuncio/:anc_id', AnuncioController.listOne);
 routes.post('/usuario/:usr_id/exemplar/:exm_id/anuncio', AnuncioController.store);
 routes.delete('/anuncio/:anc_id', AnuncioController.delete);
+
+// Proposta
+routes.post('/usuario/:usr_id/exemplar/:exm_id/anuncio/:anc_id/proposta', PropostaController.store);
 
 module.exports = routes;
