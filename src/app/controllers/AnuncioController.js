@@ -20,7 +20,7 @@ module.exports = {
         const query = await Exemplar.findByPk(anunc.exm_id)
         return query;
       })
-      );
+    );
       
     if(!exemplares.length) {
       return res.status(400).json({ error: "Exemplares não encontrados!" });
@@ -47,7 +47,6 @@ module.exports = {
         return returnQuery;
       })
     );
-    console.log(usuarios)
     
     const imagens = imagesView.renderMany(images);
     
