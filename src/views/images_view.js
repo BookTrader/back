@@ -1,9 +1,11 @@
 module.exports = {
     render(image){
-        return {
+        const parsedImg = {
             id: image.id,
-            url: `http://192.168.100.77:3333/uploads/${image.path}`
+            url: `http://192.168.100.83:3333/uploads/${image.path}`
         }
+
+        return parsedImg
     },
 
     renderMany(images){

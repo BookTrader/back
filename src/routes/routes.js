@@ -45,5 +45,6 @@ routes.delete('/anuncio/:anc_id', AnuncioController.delete);
 // Proposta
 routes.post('/usuario/:usr_id/exemplar/:exm_id/anuncio/:anc_id/proposta', PropostaController.store);
 routes.get('/anuncio/:anc_id/proposta', PropostaController.listAll);
+routes.get('/proposta/:prop_id', PropostaController.listOne);
 
 module.exports = routes;
