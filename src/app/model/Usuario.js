@@ -11,6 +11,7 @@ class Usuario extends Model {
       usr_ender_cep: DataTypes.INTEGER,
       usr_ender_cidade: DataTypes.STRING,
       usr_ender_bairro: DataTypes.STRING,
+      usr_telefone: DataTypes.STRING,
       usr_email: DataTypes.STRING,
       usr_senha: DataTypes.STRING,
       usr_range_troca: DataTypes.INTEGER,

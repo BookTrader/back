@@ -5,7 +5,8 @@ class Anuncio extends Model {
     super.init(
       {
         anc_descricao: DataTypes.STRING,
-        is_proposal: DataTypes.BOOLEAN
+        is_proposal: DataTypes.BOOLEAN,
+        status: DataTypes.STRING,
       }, {
         sequelize, freezeTableName: true, modelName: 'anuncio'
       }

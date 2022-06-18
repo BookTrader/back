@@ -7,6 +7,7 @@ const ExemplarController = require('../app/controllers/ExemplarController');
 const ImagemController = require('../app/controllers/ImagemController');
 const AnuncioController = require('../app/controllers/AnuncioController');
 const PropostaController = require('../app/controllers/PropostaController');
+const TrocaController = require('../app/controllers/TrocaController');
 
 const uploadConfig = require('../config/upload');
 
@@ -46,5 +47,8 @@ routes.delete('/anuncio/:anc_id', AnuncioController.delete);
 routes.post('/usuario/:usr_id/exemplar/:exm_id/anuncio/:anc_id/proposta', PropostaController.store);
 routes.get('/anuncio/:anc_id/proposta', PropostaController.listAll);
 routes.get('/proposta/:prop_id', PropostaController.listOne);
+
+// Troca
+routes.post('/anuncio/:anc_id/proposta/:prop_id/troca', TrocaController.create);
 
 module.exports = routes;

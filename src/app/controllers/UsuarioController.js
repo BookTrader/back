@@ -54,7 +54,8 @@ module.exports = {
         usr_ender_bairro,
         usr_range_troca,
         usr_latitude,
-        usr_longitude
+        usr_longitude,
+        usr_telefone,
       } = req.body;
       const usuario = await Usuario.findByPk(usr_id).catch();
       
@@ -72,6 +73,7 @@ module.exports = {
       data.usr_range_troca ? usuario.usr_range_troca = data.usr_range_troca : null;
       data.usr_latitude ? usuario.usr_latitude = data.usr_latitude : null;
       data.usr_longitude ? usuario.usr_longitude = data.usr_longitude : null;
+      data.usr_telefone ? usuario.usr_telefone = data.usr_telefone : null;
       
       if(imagem && usuario.usr_foto) {
         await unlinkAsync(path.join(__dirname, '..', '..', '..', 'uploads', usuario.usr_foto));
@@ -82,7 +84,6 @@ module.exports = {
       }
 
       const usr_fields = [
-        'usr_foto',
         'usr_nome',
         'usr_cpf',
         'usr_ender_uf',
@@ -91,7 +92,8 @@ module.exports = {
         'usr_ender_bairro',
         'usr_range_troca',
         'usr_latitude',
-        'usr_longitude'
+        'usr_longitude',
+        'usr_telefone'
       ];
 
       let fieldCount = 0;
