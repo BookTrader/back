@@ -132,6 +132,11 @@ module.exports = {
       return res.status(400).json({ error: "Usuário não encontrado!" });
     }
 
+    const anuncio = await Anuncio.findOne({ where: { id: proposta.anc_id } })
+    if(!anuncio) {
+      return res.status(400).json({ error: "Anúncio não encontrado!" });
+    }
+
     const imagens = await Imagem.findAll({ where: { exm_id: exemplar.id } });
     if(!imagens) {
       return res.status(400).json({ error: "Imagens não encontradas!" });
@@ -165,6 +170,12 @@ module.exports = {
         usr_ender_cidade: usuario.usr_ender_cidade,
         usr_ender_bairro: usuario.usr_ender_bairro,
       },
+      anuncio: {
+        anc_id: anuncio.id,
+        status: anuncio.status,
+        usr_id: anuncio.usr_id,
+        exm_id: anuncio.exm_id,
+      }
     }
 
     return res.json(resp);
