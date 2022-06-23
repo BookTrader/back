@@ -50,5 +50,6 @@ routes.get('/proposta/:prop_id', PropostaController.listOne);
 
 // Troca
 routes.post('/anuncio/:anc_id/proposta/:prop_id/troca', TrocaController.create);
+routes.get('/troca/:anc_id', TrocaController.listOne);
 
 module.exports = routes;
