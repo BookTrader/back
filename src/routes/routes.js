@@ -40,6 +40,7 @@ routes.delete('/imagem/:img_id', ImagemController.delete);
 // Anúncio
 routes.get('/anuncio', AnuncioController.listAll);
 routes.get('/anuncio/:anc_id', AnuncioController.listOne);
+routes.get('/anuncio/usuario/:usr_id', AnuncioController.listMy);
 routes.post('/usuario/:usr_id/exemplar/:exm_id/anuncio', AnuncioController.store);
 routes.delete('/anuncio/:anc_id', AnuncioController.delete);
 
@@ -50,6 +51,7 @@ routes.get('/proposta/:prop_id', PropostaController.listOne);
 
 // Troca
 routes.post('/anuncio/:anc_id/proposta/:prop_id/troca', TrocaController.create);
-routes.get('/troca/:anc_id', TrocaController.listOne);
+routes.get('/troca/:troca_id', TrocaController.listOne);
+routes.get('/troca/usuario/:usr_id', TrocaController.listAll);
 
 module.exports = routes;

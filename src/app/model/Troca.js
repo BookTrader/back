@@ -11,7 +11,9 @@ class Troca extends Model {
 
   static associate(models) {
     this.belongsTo(models.anuncio, { foreignKey: 'anc_id', as: 'anuncio' })
+    this.belongsTo(models.anuncio, { foreignKey: 'anc_usr_id', as: 'anuncio_usr' })
     this.belongsTo(models.proposta, { foreignKey: 'prop_id', as: 'proposta' })
+    this.belongsTo(models.proposta, { foreignKey: 'prop_usr_id', as: 'proposta_usr' })
   }
 }
 

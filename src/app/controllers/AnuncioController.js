@@ -26,7 +26,7 @@ module.exports = {
       return res.status(400).json({ error: "Exemplares não encontrados!" });
     }
     
-    images = await Promise.all(
+    const images = await Promise.all(
       exemplares.map(async (exemp) => {
         const query = await Imagem.findOne({where: { exm_id: exemp.id }});
         return query;
@@ -51,6 +51,40 @@ module.exports = {
     const imagens = imagesView.renderMany(images);
     
     return res.json({exemplares, imagens, anuncios, usuarios});
+  },
+
+  async listMy(req, res) {
+    const { usr_id } = req.params;
+
+    const anuncios = await Anuncio.findAll({where: {usr_id}});
+    if(!anuncios) {
+      return res.status(400).json({ error: "Anuncios não encontrados!" });
+    };
+
+    let exemplares = [];
+    
+    exemplares = await Promise.all(
+      anuncios.map(async (anunc) => {
+        const query = await Exemplar.findByPk(anunc.exm_id)
+        return query;
+      })
+    );
+    if(exemplares.length === 0) {
+      return res.status(400).json({ error: "Exemplares não encontrados!" });
+    };
+
+    await Promise.all(
+      exemplares.map(async (exemp) => {
+        const query = await Imagem.findAll({where: { exm_id: exemp.id }});
+        if(!query) { return res.status(400).send({error: "Erro ao procurar fotos do exemplar!"}) }
+        
+        const imagens = imagesView.renderMany(query);
+        
+        exemp.setDataValue('imagens', imagens);
+      })
+    );
+    
+    return res.json({exemplares, anuncios});
   },
   
   async store(req, res) {
