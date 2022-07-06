@@ -4,53 +4,61 @@ const Anuncio = require('../model/Anuncio');
 const Imagem = require('../model/Imagem');
 
 const imagesView = require('../../views/images_view');
+const distanceCalc = require('../middlewares/distanceCalc');
 
 module.exports = {
   async listAll(req, res) {
-    const anuncios = await Anuncio.findAll();
+    const { usr_id } = req.params;
 
+    const anuncios = await Anuncio.findAll();
     if(!anuncios) {
       return res.status(400).json({ error: "Anuncios não encontrados!" });
     }
-    
-    let exemplares = [];
-    
-    exemplares = await Promise.all(
-      anuncios.map(async (anunc) => {
-        const query = await Exemplar.findByPk(anunc.exm_id)
-        return query;
-      })
-    );
-      
-    if(!exemplares.length) {
-      return res.status(400).json({ error: "Exemplares não encontrados!" });
-    }
-    
-    const images = await Promise.all(
-      exemplares.map(async (exemp) => {
-        const query = await Imagem.findOne({where: { exm_id: exemp.id }});
-        return query;
-      })
-    );
 
-    const usuarios = await Promise.all(
-      anuncios.map(async (anun) => {
-        const query = await Usuario.findOne({where: {id: anun.usr_id}});
-        const returnQuery = {
-          id: query.id,
-          usr_apelido: query.usr_apelido,
-          usr_foto: query.usr_foto,
-          usr_ender_cidade: query.usr_ender_cidade,
-          usr_ender_bairro: query.usr_ender_bairro,
-          anc_id: anun.id,
+    let loggedUser = null;
+    if(usr_id) {
+      loggedUser = await Usuario.findByPk(usr_id)
+    }
+
+    let returnAncs = [];
+    await Promise.all(
+      anuncios.map(async (anunc) => {
+        const exemplar = await Exemplar.findByPk(anunc.exm_id);
+        const imagem = await Imagem.findOne({where: { exm_id: exemplar.id }});
+        const usuario = await Usuario.findOne({where: {id: anunc.usr_id}});
+        if (loggedUser) {
+          const loggedCoord = { lat: loggedUser.usr_latitude, lng: loggedUser.usr_longitude };
+          const userCoord = { lat: usuario.usr_latitude, lng: usuario.usr_longitude };
+          const range = await distanceCalc(loggedCoord, userCoord);
+
+          if(range / 1000 > loggedUser.usr_range_troca) return
+          console.log(range / 1000)
         }
-        return returnQuery;
+
+        const returnUser = {
+          id: usuario.id,
+          usr_apelido: usuario.usr_apelido,
+          usr_foto: usuario.usr_foto,
+          usr_ender_cidade: usuario.usr_ender_cidade,
+          usr_ender_bairro: usuario.usr_ender_bairro,
+          usr_range_troca: usuario.usr_range_troca,
+          anc_id: anunc.id,
+        }
+
+        const parsedImage = imagesView.render(imagem);
+
+        exemplar.setDataValue('imagens', parsedImage);
+        anunc.setDataValue('exemplares', exemplar);
+        anunc.setDataValue('usuario', returnUser);
+
+        returnAncs.push(anunc)
       })
     );
-    
-    const imagens = imagesView.renderMany(images);
-    
-    return res.json({exemplares, imagens, anuncios, usuarios});
+    if(!returnAncs) {
+      return res.status(400).json({error: 'Erro ao buscar anúncios!'})
+    }
+
+    return res.json(returnAncs);
   },
 
   async listMy(req, res) {
