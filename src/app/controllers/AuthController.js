@@ -28,7 +28,7 @@ module.exports = {
         const token = jwt.sign(
           {id: usuario.id}, 
           "cachoeira", 
-          {expiresIn: "1h"}
+          {expiresIn: "24h"}
         );
 
         if(usuario.usr_range_troca) {

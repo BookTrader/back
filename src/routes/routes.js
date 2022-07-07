@@ -43,6 +43,7 @@ routes.get('/anuncio/:anc_id', AnuncioController.listOne);
 routes.get('/anuncio/usuario/:usr_id', AnuncioController.listMy);
 routes.post('/usuario/:usr_id/exemplar/:exm_id/anuncio', AnuncioController.store);
 routes.delete('/anuncio/:anc_id', AnuncioController.delete);
+routes.get('/list/exemplar/usuario/:usr_id', AnuncioController.listAncExemp)
 
 // Proposta
 routes.post('/usuario/:usr_id/exemplar/:exm_id/anuncio/:anc_id/proposta', PropostaController.store);

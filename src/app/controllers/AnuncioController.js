@@ -152,5 +152,14 @@ module.exports = {
     await anuncio.destroy().then(() => {
       return res.json({ message: "Anúncio excluido com sucesso!" })
     });
+  },
+
+  async listAncExemp(req,res) {
+    const {usr_id} = req.params
+
+    const anuncios = await Anuncio.count({where: {usr_id}})
+    const exemplares = await Exemplar.count({where: {usr_id}})
+
+    return res.json({anuncios, exemplares})
   }
 }
